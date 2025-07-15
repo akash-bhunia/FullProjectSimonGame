@@ -1,0 +1,133 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+/* Headings */
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+/* Game container */
+.btn-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Row layout */
+.line-one,
+.line-2 {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* Button styles */
+.btn {
+  width: 120px;
+  height: 120px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 15px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn:active,
+.flash {
+  transform: scale(0.95);
+  opacity: 0.7;
+}
+
+.userflash {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Button colors */
+.red {
+  background-color: #e74c3c;
+}
+
+.yellow {
+  background-color: #f1c40f;
+  color: #222;
+}
+
+.green {
+  background-color: #2ecc71;
+}
+
+.purple {
+  background-color: #9b59b6;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .btn {
+    width: 100px;
+    height: 100px;
+    font-size: 1.2rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2,
+  h3 {
+    font-size: 1rem;
+  }
+
+  .btn-container {
+    gap: 10px;
+  }
+
+  .line-one,
+  .line-2 {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn {
+    width: 80px;
+    height: 80px;
+    font-size: 1rem;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  h2, h3 {
+    font-size: 0.9rem;
+  }
+}
