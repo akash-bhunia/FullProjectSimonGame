@@ -3,6 +3,11 @@
 <head>
   <title>Simon Game</title>
   <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
 <body>
   <h1>Simon Game</h1>
@@ -19,6 +24,15 @@
       <div class="btn purple" id="purple">4</div>
     </div>
   </div>
+
+  <form class="form">
+    <input 
+      id="startInput" 
+      type="text" 
+      placeholder="Type anything to start..." 
+      autofocus
+    >
+  </form>
 
   <script src="/js/app.js"></script>
 </body>

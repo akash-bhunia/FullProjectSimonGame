@@ -6,20 +6,28 @@ const colors = ["yellow", "green", "red", "purple"];
 
 const h2 = document.querySelector('h2');
 const h3 = document.querySelector('h3');
+const input = document.getElementById("startInput");
 
-// Load highest score from backend
+// Load highest score on page load
 window.addEventListener('load', async () => {
   const res = await fetch('/simongame/score');
   const data = await res.json();
   document.getElementById('highScore').innerText = data.highScore;
 });
 
-document.addEventListener('keypress', () => {
-  if (!start) {
-    start = true;
-    levelUp();
+// Start game when user types something
+input.addEventListener("keydown", (e) => {
+  if (!start && (e.key.length === 1 || e.key === "Enter")) {
+    startGame();
   }
 });
+
+function startGame() {
+  start = true;
+  input.classList.add("hidden");
+  input.value = "";
+  levelUp();
+}
 
 function levelUp() {
   userSeq = [];
@@ -55,7 +63,7 @@ function checkAns(idx) {
       setTimeout(levelUp, 1000);
     }
   } else {
-    h2.innerHTML = `Game Over! Your Score: <b>${level - 1}</b><br>Press any key to restart.`;
+    h2.innerHTML = `Game Over! Your Score: <b>${level - 1}</b><br>Type to restart.`;
     document.body.style.backgroundColor = 'red';
     setTimeout(() => document.body.style.backgroundColor = 'white', 1000);
     sendHighScore(level - 1);
@@ -68,6 +76,8 @@ function reset() {
   gameSeq = [];
   userSeq = [];
   level = 0;
+  input.classList.remove("hidden");
+  input.focus();
 }
 
 async function sendHighScore(score) {
