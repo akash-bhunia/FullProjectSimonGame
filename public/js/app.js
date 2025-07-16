@@ -8,16 +8,20 @@ const h2 = document.querySelector('h2');
 const h3 = document.querySelector('h3');
 const input = document.getElementById("startInput");
 
-// Load highest score on page load
+// Load highest score from backend
 window.addEventListener('load', async () => {
-  const res = await fetch('/simongame/score');
-  const data = await res.json();
-  document.getElementById('highScore').innerText = data.highScore;
+  try {
+    const res = await fetch('/simongame/score');
+    const data = await res.json();
+    document.getElementById('highScore').innerText = data.highScore;
+  } catch (err) {
+    console.error("Failed to load high score", err);
+  }
 });
 
-// Start game when user types something
-input.addEventListener("keydown", (e) => {
-  if (!start && (e.key.length === 1 || e.key === "Enter")) {
+// Start game when user types anything (mobile-compatible)
+input.addEventListener("input", () => {
+  if (!start && input.value.trim().length > 0) {
     startGame();
   }
 });
@@ -25,7 +29,8 @@ input.addEventListener("keydown", (e) => {
 function startGame() {
   start = true;
   input.classList.add("hidden");
-  input.value = "";
+  input.blur();            // Hide keyboard on mobile
+  input.value = "";        // Clear field
   levelUp();
 }
 
@@ -77,17 +82,25 @@ function reset() {
   userSeq = [];
   level = 0;
   input.classList.remove("hidden");
-  input.focus();
+
+  // Wait a moment then focus input for mobile
+  setTimeout(() => {
+    input.focus();
+  }, 300);
 }
 
 async function sendHighScore(score) {
-  const res = await fetch('/simongame/score', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ score })
-  });
-  const data = await res.json();
-  document.getElementById('highScore').innerText = data.highScore;
+  try {
+    const res = await fetch('/simongame/score', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ score })
+    });
+    const data = await res.json();
+    document.getElementById('highScore').innerText = data.highScore;
+  } catch (err) {
+    console.error("Failed to send score", err);
+  }
 }
 
 document.querySelectorAll(".btn").forEach(btn => {
