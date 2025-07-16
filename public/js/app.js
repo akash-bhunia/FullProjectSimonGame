@@ -7,8 +7,9 @@ const colors = ["yellow", "green", "red", "purple"];
 const h2 = document.querySelector('h2');
 const h3 = document.querySelector('h3');
 const input = document.getElementById("startInput");
+const rulesBox = document.getElementById("rulesBox"); // 📜 rules div
 
-// Load highest score from backend
+// Load highest score on page load
 window.addEventListener('load', async () => {
   try {
     const res = await fetch('/simongame/score');
@@ -19,7 +20,7 @@ window.addEventListener('load', async () => {
   }
 });
 
-// Start game when user types anything (mobile-compatible)
+// Start game when user types anything (works on mobile)
 input.addEventListener("input", () => {
   if (!start && input.value.trim().length > 0) {
     startGame();
@@ -29,8 +30,9 @@ input.addEventListener("input", () => {
 function startGame() {
   start = true;
   input.classList.add("hidden");
-  input.blur();            // Hide keyboard on mobile
-  input.value = "";        // Clear field
+  input.blur();              // hide mobile keyboard
+  input.value = "";          // clear input field
+  rulesBox.style.display = "none"; // hide rules 📜
   levelUp();
 }
 
@@ -82,11 +84,8 @@ function reset() {
   userSeq = [];
   level = 0;
   input.classList.remove("hidden");
-
-  // Wait a moment then focus input for mobile
-  setTimeout(() => {
-    input.focus();
-  }, 300);
+  setTimeout(() => input.focus(), 300);
+  rulesBox.style.display = "block"; // show rules again
 }
 
 async function sendHighScore(score) {
